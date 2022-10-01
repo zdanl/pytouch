@@ -3,37 +3,20 @@
 import sys
 import os.path
 
-tmpl_data = "\n".join("""
-#!/usr/bin/env python3
-
-# This is your project description.
-
-# Author: Your Name <your@name.me>
-# 2022 (c) some rights reversed.
+from include.defaults import source_tmpl, default_file
 
 def main():
-    your_function()
-    pass
-
-def your_function():
-    return 1
-
-if __name__ == "__main__":
-    main()
-""".split("\n")[1:-1])
-
-def main():
-    global tmpl_data
+    global source_tmpl, default_file
 
     # f is file
-    if (os.path.exists("template.pytouch")):
-        f = open("template.pytouch", "r")
-        tmpl_data = f.read()
+    if (os.path.exists(default_file)):
+        f = open(default_file, "r")
+        source_tmpl = f.read()
         f.close()
 
     # t is target
     with open(sys.argv[1], "w") as t:
-        t.write(tmpl_data)
+        t.write(source_tmpl)
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
