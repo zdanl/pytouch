@@ -1,5 +1,3 @@
-default_file = "foo.pytouch"
-
 source_tmpl = "\n".join("""
 #!/usr/bin/env python3
 

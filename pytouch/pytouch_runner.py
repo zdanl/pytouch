@@ -3,16 +3,10 @@
 import sys
 import os.path
 
-from pytouch.defaults import source_tmpl, default_file
+from pytouch.defaults import source_tmpl
 
 def main():
-    global source_tmpl, default_file
-
-    # f is file
-    if (os.path.exists(default_file)):
-        f = open(default_file, "r")
-        source_tmpl = f.read()
-        f.close()
+    global source_tmpl
 
     # t is target
     with open(sys.argv[1], "w") as t:
