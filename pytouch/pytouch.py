@@ -3,7 +3,7 @@
 import sys
 import os.path
 
-from include.defaults import source_tmpl, default_file
+from pytouch.defaults import source_tmpl, default_file
 
 def main():
     global source_tmpl, default_file
