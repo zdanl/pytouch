@@ -65,21 +65,30 @@ class TemplateEngine(object):
                 path = root + "/" + dir
                 if "__pycache__" in dir:
                     os.system("rm -rf %s" %path)
-                print(self.substitute_values)
                 for k, v in self.substitute_values.items():
                     if k in dir:
-                        print("%s versus %s" %(k, dir))
-                        print("path %s" %path)
-                        print("value %s" %v)
-                        print("---")
                         os.system("mv %s %s" %(path, path.replace(k, v)))
                         break
+           
+            last_changed = False
             for file in files:
+                data = ""
                 path = root + "/" + file
                 if file.endswith(".pyc"):
                     os.system("rm %s" %path)
+                with open(path, "r") as f:
+                    data = f.read()
+                    for k, v in self.substitute_values.items():
+                        if k in data:
+                            data = data.replace(k, v)
+                            last_changed = True
 
-                print(root + "/" + file)
+                if last_changed is True:
+                    with open(path, "w") as f2:
+                        f2.write(data)
+                    print("Processed %s" %file)
+                    last_changed = False
+
 
     def _compile_template_data(self):
         pass

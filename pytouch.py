@@ -45,4 +45,12 @@ if __name__ == "__main__":
     prse.add_argument("-template", default="boilerplate", help="Proj tmplate")
 
     argv = prse.parse_args()
+    if os.path.exists(argv.name):
+        print("It seems like %s exists. May I delete?" %argv.name)
+        a = input("Delete %s [y/n] >> " %argv.name)
+        if (a.lower().startswith("y")):
+            os.system("rm -rf %s" %argv.name)
+        else:
+            print("Not deleting. Choose a different name.")
+            sys.exit(1)
     main()
