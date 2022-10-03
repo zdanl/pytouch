@@ -88,6 +88,10 @@ class TemplateEngine(object):
                     print("Processed %s" %file)
                     last_changed = False
 
+                for k, v in self.substitute_values.items():
+                    if k in file:
+                        os.system("mv %s %s" %(path, path.replace(k, v)))
+                        break
 
     def _compile_template_data(self):
         pass
@@ -98,6 +102,7 @@ class TemplateEngine(object):
     def run(self):
         self._configure_template()
         self._prepare_build()
+        self._compile_files_and_directories()
         self._compile_files_and_directories()
         self._compile_template_data()
         self._move_build()
@@ -111,6 +116,7 @@ class TemplateEngine(object):
             return 0
         else:
             absolute_path = pytouch.__file__.replace("__init__.py", template)
+            print("Absolute path: %s" %absolute_path)
             if os.path.exists(absolute_path) and os.path.isdir(absolute_path):
                 self.template_path = absolute_path
                 return 0

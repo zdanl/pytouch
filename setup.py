@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name="pytouch",
     version="0.1",
-    packages=["pytouch"],
+    packages=["pytouch", "pytouch.engine", "pytouch.ascii"],
     install_requires=["nuitka"],
     url="https://mescalin.co/staff/zulla",
     license="MIT",
