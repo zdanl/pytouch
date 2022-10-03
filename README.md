@@ -1,19 +1,21 @@
-README
-======
+PyTouch
+=======
 
 Welcome to pytouch.
 
 Description
 ===========
 This is an utterly small but growing tool. It accelerates the process of
-starting a project over and over again, or dealing with Python projects 
-without an IDE in general. It creates a minimal python file for you. You
-may also compress and encrypt entire projects.
+starting a project, and managing it, or dealing with Python projects 
+without an IDE in general. It creates a minimal python project for you. You
+may also compress and encrypt entire projects. The type of sample project
+it creates depends on a boilerplate template. There are internal ones that
+we support and maintain, but you may also chose an external one.
 
 Dependencies
 ============
-(as root)
-pip3 install sh nuitka
+pip3 install nuitka
+pip3 install sh
 
 Installation
 ============
