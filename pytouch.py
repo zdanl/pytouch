@@ -13,6 +13,8 @@ def main():
     
     tmpl_eng = TemplateEngine()
     
+    print("Chosen template engine: %s" %argv.template)
+
     # Calibrate Template Engine
     for k, v in argv.__dict__.items():
         arg = "PROJECT_%s" %k.upper()

@@ -41,10 +41,10 @@ class TemplateEngine(object):
             self.delimiter.start = config.start_delimiter
             self.delimiter.end = config.end_delimiter
 
-
         else:
-            absolute_path = pytouch.__file__.replace("__item__.py", template)
-            if os.path.exists(absolute_path):
+            absolute_path = pytouch.__file__.replace("__init__.py", template)
+            print("Looking for %s" %absolute_path)
+            if os.path.exists(absolute_path) and os.path.isdir(absolute_path):
                 print("Template exists and is internal.")
                 return 0
             else:
