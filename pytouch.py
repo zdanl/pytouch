@@ -1,17 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# __________         ___________                     .__      
+# \______   \ ___.__.\__    ___/____   __ __   ____  |  |__   
+# |     ___/<   |  |  |    |  /  _ \ |  |  \_/ ___\ |  |  \  
+# |    |     \___  |  |    | (  <_> )|  |  /\  \___ |   Y  \ 
+# |____|     / ____|  |____|  \____/ |____/  \___  >|___|  / 
+#            \/ @methoxetamin                 0.1 \/      \/
+#
+
 import sys, os
 import os.path
 import argparse
 import pytouch
 
-# make this pytouch.engine.crypto, etc.
+# rename this to pytouch.engines
+# TODO change to naming convention AaBb to aa_bb
 from pytouch.engine import TemplateEngine, CryptoEngine
 from pytouch.engine import CompressionEngine
 
+from pytouch.ascii import banner
+
 def main():
-    
     tmpl_eng = TemplateEngine()
     
     print("Chosen template engine: %s" %argv.template)
@@ -43,6 +53,10 @@ if __name__ == "__main__":
     prse.add_argument("--descr", help="Describe the project")
 
     prse.add_argument("-template", default="boilerplate", help="Proj tmplate")
+    
+    # keep windows 11 compatibility in mind TODO
+    os.system("clear")
+    print(banner)
 
     argv = prse.parse_args()
     if os.path.exists(argv.name):

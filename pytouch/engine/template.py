@@ -6,7 +6,6 @@ class ov(object):
     def __init__(self, d): self.__dict__ = d
 
 class TemplateEngine(object):
-
     # could as well be {{ and }} as in other template engines
     delimiter = ov({
         "start": "__",
@@ -39,7 +38,7 @@ class TemplateEngine(object):
             return ov(yaml.safe_load(file))
 
     def _configure_template(self):
-        config = self._read_template_config(self.template_path + "/cfg.yaml")
+        config = self._read_template_config(self.template_path + "/.cfg.yaml")
 
         # Set delimiters
         self.delimiter.start = config.start_delimiter
@@ -107,7 +106,7 @@ class TemplateEngine(object):
     def initialize(self, template="boilerplate"):
         # Load and patch files sequentially, don't keep all files in memory
         # Load and patch to disk, load next
-        if self._exst(template) is True and self._exst(template + "/cfg.yaml"):
+        if self._exst(template) is True and self._exst(template + "/.cfg.yaml"):
             self.template_path = template
             return 0
         else:
