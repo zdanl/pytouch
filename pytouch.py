@@ -4,10 +4,11 @@
 import sys, os
 import os.path
 import argparse
-
-from pytouch.template_engine import TemplateEngine
-
 import pytouch
+
+# make this pytouch.engine.crypto, etc.
+from pytouch.engine import TemplateEngine, CryptoEngine
+from pytouch.engine import CompressionEngine
 
 def main():
     
@@ -15,14 +16,21 @@ def main():
     
     print("Chosen template engine: %s" %argv.template)
 
-    # Calibrate Template Engine
+    # Calibrate Template Engine with Argparse
     for k, v in argv.__dict__.items():
         arg = "PROJECT_%s" %k.upper()
         if arg in tmpl_eng.substitute_values.keys():
             tmpl_eng.substitute_values[arg] = v
 
     # Initialize Boilerplate or Custom Template
-    tmpl_eng.initialize(template=argv.template)
+    code = tmpl_eng.initialize(template=argv.template)
+    if code == 1:
+        print("Something went wrong with the Template Engine.")
+        sys.exit(1)
+
+    # Template engine will do everything for us.
+    tmpl_eng.run()
+    print("Your project was created.")
 
 if __name__ == "__main__":
     prse = argparse.ArgumentParser(description="Manage Python3 projects")
