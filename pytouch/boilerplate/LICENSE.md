@@ -1,7 +1,6 @@
 Wyvra License
 =============
 Version: 0.1
-The following is a legally binding contract that will never be enforced.
 
 *******************************************************************************
 Fork of the MIT License
@@ -10,11 +9,11 @@ Fork of the MIT License
 Authors and Original Inventor, Copyright & Credit Rights
 *******************************************************************************
 
-(c) 2022 Mescalin Semiconductor Ltd. <board@mescalin.co>
-(r) 2022 Dan Zulla <dan@mescalin.co>
+* (c) 2022 Mescalin Semiconductor Ltd. <board@mescalin.co>
+* (r) 2022 Dan Zulla <dan@mescalin.co>
 
-(r) 2002 The Security and Open Source Community
-(r) 2002 Humanity.
+* (r) 2002 The Security and Open Source Community
+* (r) 2002 Humanity.
 
 *******************************************************************************
 1. The License
