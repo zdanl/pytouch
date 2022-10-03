@@ -18,7 +18,8 @@ def main():
 
     # Calibrate Template Engine with Argparse
     for k, v in argv.__dict__.items():
-        arg = "PROJECT_%s" %k.upper()
+        arg = tmpl_eng.delimiter.start + "PROJECT_%s" %k.upper()
+        arg += tmpl_eng.delimiter.end
         if arg in tmpl_eng.substitute_values.keys():
             tmpl_eng.substitute_values[arg] = v
 
