@@ -14,7 +14,6 @@ import yaml, os, random
 class ov(object):
     def __init__(self, d): self.__dict__ = d
 
-
 # this is the actual engine
 class TemplateEngine(object):
     # could as well be {{ and }} as in other template engines
@@ -23,14 +22,14 @@ class TemplateEngine(object):
         "end": "__"
     })
     
-
     # project core settings as in an IDE
     project_values = {
         "NAME": "",
         "AUTHOR": "",
         "DESCR": "",
         "VERSION": "",
-        "LICENSE": ""
+        "LICENSE": "",
+        "EMAIL": ""
     }
 
     # this will be accessed by the template engine
@@ -38,9 +37,8 @@ class TemplateEngine(object):
 
     # where the template files go for compilation/substitution
     _tmp_build = "/tmp"
-    _template_engine_root = "static_templates/"
 
-    def __init__(self, name="", author="", descr="", version="", license=""):
+    def __init__(self, name="", email="", author="", descr="", version="", license=""):
         for k in self.project_values.keys():
             compile_string = self.delimiter.start + "PROJECT_%s" %k.upper()
             compile_string += self.delimiter.end

@@ -59,10 +59,11 @@ if __name__ == "__main__":
     prse = argparse.ArgumentParser(description="Manage Python3 projects")
     prse.add_argument("name", help="This is the name of everything")
     
-    prse.add_argument("--license", help="Something like GPL or MIT")
-    prse.add_argument("--author", help="Author of the project")
-    prse.add_argument("--version", help="Version number or string")
-    prse.add_argument("--descr", help="Describe the project")
+    prse.add_argument("--license", default="GPL", help="Something like GPL or MIT")
+    prse.add_argument("--author", default="John Snow", help="Author of the project")
+    prse.add_argument("--version", default="0.1", help="Version number or string")
+    prse.add_argument("--descr", default="Sample Description", help="Describe the project")
+    prse.add_argument("--email", default="email@email.me", help="Author Email Address")
 
     prse.add_argument("-template", default="appy", help="Proj tmplate")
     
