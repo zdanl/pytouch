@@ -1,10 +1,21 @@
+# __________         ___________                     .__
+# \______   \ ___.__.\__    ___/____   __ __   ____  |  |__
+# |     ___/<   |  |  |    |  /  _ \ |  |  \_/ ___\ |  |  \
+# |    |     \___  |  |    | (  <_> )|  |  /\  \___ |   Y  \
+# |____|     / ____|  |____|  \____/ |____/  \___  >|___|  /
+#       .    \/ Twitter @dzethoxy, Github: @zdanl\/ v0.1 \/
+#
+
 import pytouch
 
 import yaml, os, random
 
+# turn a dict() into an object() fullfilling accessibility fetish
 class ov(object):
     def __init__(self, d): self.__dict__ = d
 
+
+# this is the actual engine
 class TemplateEngine(object):
     # could as well be {{ and }} as in other template engines
     delimiter = ov({
@@ -12,6 +23,8 @@ class TemplateEngine(object):
         "end": "__"
     })
     
+
+    # project core settings as in an IDE
     project_values = {
         "NAME": "",
         "AUTHOR": "",
@@ -20,9 +33,12 @@ class TemplateEngine(object):
         "LICENSE": ""
     }
 
+    # this will be accessed by the template engine
     substitute_values = {}
 
+    # where the template files go for compilation/substitution
     _tmp_build = "/tmp"
+    _template_engine_root = "static_templates/"
 
     def __init__(self, name="", author="", descr="", version="", license=""):
         for k in self.project_values.keys():
@@ -33,6 +49,7 @@ class TemplateEngine(object):
     # just shortening so everything fits into 80 screen bytes per line
     def _exst(self, path): return os.path.exists(path)
 
+    # reads yaml file and returns object()  not dict()
     def _read_template_config(self, filepath):
         with open(filepath, 'r') as file:
             return ov(yaml.safe_load(file))
@@ -43,6 +60,7 @@ class TemplateEngine(object):
         # Set delimiters
         self.delimiter.start = config.start_delimiter
         self.delimiter.end = config.end_delimiter
+        return 0
 
     def _prepare_build(self):
         # make build directory
@@ -50,14 +68,16 @@ class TemplateEngine(object):
         os.mkdir(self._tmp_build)
         os.system("cp -r %s/* %s/" %(self.template_path, self._tmp_build))
         print("Building in %s" %self._tmp_build)
+        return 0
 
     def _move_build(self):
         # TODO make this better without os.system
         target = self.substitute_values["__PROJECT_NAME__"]
         os.system("mkdir %s" %target)
         os.system("mv %s/* %s" %(self._tmp_build, target))
+        return 0
 
-    def _compile_files_and_directories(self):
+    def _compile_template_data(self):
         # TODO implement your own recursion for educational purposes
         for root, dirs, files in os.walk(self._tmp_build):
             for dir in dirs:
@@ -92,33 +112,50 @@ class TemplateEngine(object):
                     if k in file:
                         os.system("mv %s %s" %(path, path.replace(k, v)))
                         break
-
-    def _compile_template_data(self):
-        pass
+        return 0
 
     def _cleanup_build(self):
         os.system("rm -rf %s" %self._tmp_build)
+        return 0
 
     def run(self):
-        self._configure_template()
-        self._prepare_build()
-        self._compile_files_and_directories()
-        self._compile_files_and_directories()
-        self._compile_template_data()
-        self._move_build()
-        self._cleanup_build()
+        # initially all is fine
+        code = 0
 
-    def initialize(self, template="boilerplate"):
+        # see if template configuration works
+        code += self._configure_template()
+
+        # see if preparing the build works
+        code += self._prepare_build()
+
+        # fix the need to do this twice
+        # due to directory recursion and os.walk
+        code += self._compile_template_data()
+        code += self._compile_template_data()
+        
+        # see if moving the build works
+        code += self._move_build()
+        
+        # see if cleanup works
+        code += self._cleanup_build()
+
+        return code
+
+    def initialize(self, template="appy"):
         # Load and patch files sequentially, don't keep all files in memory
         # Load and patch to disk, load next
+
+        # Check if Template exists in relative location to where PyTouch is
         if self._exst(template) is True and self._exst(template + "/.cfg.yaml"):
             self.template_path = template
             return 0
+        # CHeck if Template is maintained and shipped by us
         else:
-            absolute_path = pytouch.__file__.replace("__init__.py", template)
+            absolute_path = pytouch.__file__.replace("__init__.py", "static_templates/" + template)
             print("Absolute path: %s" %absolute_path)
             if os.path.exists(absolute_path) and os.path.isdir(absolute_path):
                 self.template_path = absolute_path
                 return 0
             else:
+                print("Not found.")
                 return 1

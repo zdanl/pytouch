@@ -6,22 +6,27 @@
 # |     ___/<   |  |  |    |  /  _ \ |  |  \_/ ___\ |  |  \  
 # |    |     \___  |  |    | (  <_> )|  |  /\  \___ |   Y  \ 
 # |____|     / ____|  |____|  \____/ |____/  \___  >|___|  / 
-#            \/ @methoxetamin                 0.1 \/      \/
+#       .    \/ Twitter @dzethoxy, Github: @zdanl\/ v0.1 \/
 #
 
+# system & standard library imports
 import sys, os
 import os.path
 import argparse
+
+# import the framework
 import pytouch
 
-# rename this to pytouch.engines
+# TODO rename this to pytouch.engines
 # TODO change to naming convention AaBb to aa_bb
 from pytouch.engine import TemplateEngine, CryptoEngine
 from pytouch.engine import CompressionEngine
 
+# import the banner for display
 from pytouch.ascii import banner
 
 def main():
+    #tmpl_eng = TemplateEngine(internal_root_directory="")
     tmpl_eng = TemplateEngine()
     
     print("Chosen template engine: %s" %argv.template)
@@ -40,8 +45,15 @@ def main():
         sys.exit(1)
 
     # Template engine will do everything for us.
-    tmpl_eng.run()
-    print("Your project was created.")
+    code = tmpl_eng.run()
+
+    # Check if it worked.
+    if code != 0:
+        print("Something went wrong. Project probably not created.")
+    else:
+        print("Your project [%s] was created." %argv.name)
+
+    return code
 
 if __name__ == "__main__":
     prse = argparse.ArgumentParser(description="Manage Python3 projects")
@@ -52,7 +64,7 @@ if __name__ == "__main__":
     prse.add_argument("--version", help="Version number or string")
     prse.add_argument("--descr", help="Describe the project")
 
-    prse.add_argument("-template", default="boilerplate", help="Proj tmplate")
+    prse.add_argument("-template", default="appy", help="Proj tmplate")
     
     # keep windows 11 compatibility in mind TODO
     os.system("clear")
