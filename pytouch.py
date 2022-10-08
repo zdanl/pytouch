@@ -11,21 +11,13 @@
 
 # system & standard library imports
 import sys, os
+import yaml
 import os.path
 import platform
 import argparse
 
 # import the framework
 import pytouch
-
-# TODO rename this to pytouch.engines
-# TODO change to naming convention AaBb to aa_bb
-from pytouch.engine import TemplateEngine, CryptoEngine
-from pytouch.engine import CompressionEngine
-from pytouch.tricks import object_view
-
-# import the banner for display
-from pytouch.ascii import banner
 
 def main():
     parse = argparse.ArgumentParser(description="Manage Python3 projects")
@@ -72,7 +64,7 @@ def main():
     if platform.system() == "Windows":
         command = "cls"
     os.system(command)
-    print(banner)
+    print(pytouch.ascii.banner)
 
     PyTouch.Argv = parse.parse_args()
     PyTouch.RunMode = PyTouch.Argv.command
@@ -93,7 +85,27 @@ def main():
         parse.print_help()
 
 def main_identity():
-    pass
+    # TODO find a better way to do this.
+    print(PyTouch.Config)
+    if PyTouch.Argv.name:
+        PyTouch.Config["identity"]["name"] = PyTouch.Argv.name
+    elif PyTouch.Argv.email:
+        PyTouch.Config.identity["email"] = PyTouch.Argv.email
+    elif PyTouch.Argv.company:
+        PyTouch.Config.identity["company"] = PyTouch.Argv.company
+    elif PyTouch.Argv.pgp:
+        PyTouch.Config.identity["pgp"] = PyTouch.Argv.pgp
+    write_config()
+
+
+def main_destroy():
+    p = PyTouch.Argv.name
+    if os.path.exists(p) and os.path.exists(p + "/.pytouch.yaml"):
+        os.system("rm -rf %s" %p)
+        print("Deleted project.")
+    else:
+        print("Project does not exist or is not a PyTouch project.")
+        sys.exit(1)
 
 def main_zip():
     pass
@@ -116,7 +128,7 @@ def main_create():
             print("Not deleting. Choose a different name.")
             sys.exit(1)
     
-    tmpl_eng = TemplateEngine()
+    tmpl_eng = pytouch.engine.template()
     
     print("Chosen template engine: %s" %argv.template)
 
@@ -144,9 +156,31 @@ def main_create():
 
     return code
 
+def write_config():
+    with open(PyTouch.Home + "/.pytouch.yaml", 'w') as f:
+        yaml.dump(PyTouch.Config, f)
+    print("Config written.")
+        
+def load_config():
+    # reads yaml file and returns object()  not dict()
+    path = PyTouch.Home + "/.pytouch.yaml"
+    if not os.path.exists(path):
+        print("No PyTouch config file found.")
+        with open(path, 'w') as file:
+            file.write("---")
+    else:
+        with open(path, 'r') as file:
+            PyTouch.Config = yaml.safe_load(file)
+            print("Config:")
+            print(PyTouch.Config)
+
 if __name__ == "__main__":
-    PyTouch = object_view({
+    PyTouch = pytouch.tricks.ov({
         "RunMode": None,
-        "Argv": None
+        "Argv": None,
+        "Config": None,
+        "Home": os.path.expanduser("~")
     })
+
+    load_config()
     main()

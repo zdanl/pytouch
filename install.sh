@@ -24,8 +24,9 @@ echo "Target path $target_path";
 # Create directory not installed by pip3
 target_path="$target_path/static_templates";
 
-# Move 
+# Move [fraimwork, appy, networking] Templates
 cp -r pytouch/pytouch/static_templates/fraimwork $target_path;
 cp -r pytouch/pytouch/static_templates/appy $target_path;
+cp -r pytouch/pytouch/static_templates/networking $target_path;
 
 echo "Installed.";

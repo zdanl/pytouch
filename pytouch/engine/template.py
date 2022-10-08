@@ -10,14 +10,10 @@ import pytouch
 
 import yaml, os, random
 
-# turn a dict() into an object() fullfilling accessibility fetish
-class ov(object):
-    def __init__(self, d): self.__dict__ = d
-
 # this is the actual engine
-class TemplateEngine(object):
+class template(object):
     # could as well be {{ and }} as in other template engines
-    delimiter = ov({
+    delimiter = pytouch.tricks.ov({
         "start": "__",
         "end": "__"
     })
@@ -50,7 +46,7 @@ class TemplateEngine(object):
     # reads yaml file and returns object()  not dict()
     def _read_template_config(self, filepath):
         with open(filepath, 'r') as file:
-            return ov(yaml.safe_load(file))
+            return pytouch.tricks.ov(yaml.safe_load(file))
 
     def _configure_template(self):
         config = self._read_template_config(self.template_path + "/.cfg.yaml")

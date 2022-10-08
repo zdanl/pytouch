@@ -6,5 +6,4 @@ banner = """
  |____|     / ____|  |____|  \____/ |____/  \___  >|___|  /
        .    \/ Twitter @dzethoxy, Github: @zdanl\/ v0.1 \/
 
-
 """
