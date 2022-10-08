@@ -4,6 +4,9 @@ clear;
 
 python3 -c "from pytouch import ascii; print(ascii.banner)";
 
+# Cleanup developer taint
+find . -name __pycache__ -type d;
+
 # Install Python3 Module
 pip3 install .;
 

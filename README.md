@@ -15,8 +15,8 @@ that we support and maintain, but you may also chose an external one.
 
 Dependencies
 ============
-nuitka
+pip3 install nuitka3
 
 Installation
 ============
-./scripts/install.sh
+install.sh

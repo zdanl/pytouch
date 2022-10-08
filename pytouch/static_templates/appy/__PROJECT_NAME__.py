@@ -7,6 +7,7 @@
 # (c) 2022 Some Rights Reversed.
 
 import __PROJECT_NAME__.foomodule
+
 from __PROJECT_NAME__.barmodule import bar
 
 def main():
